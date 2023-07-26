@@ -10,6 +10,26 @@ import json
 import ssl
 import smtplib
 import psutil
+import shutil
+
+def porcentaje_uso_Memory():
+    # Obtenemos información sobre el uso de la memoria RAM
+    total_memory = psutil.virtual_memory().total
+    virtual_memory = psutil.virtual_memory()
+    used_ram = virtual_memory.used
+    
+    # Convertimos de bytes a gigabytes
+    used_ram_gb = used_ram / (1024 ** 3)
+    
+    return (used_ram_gb*100)/total_memory
+
+def porcentaje_uso_Disco():
+    total_disk, used_disk, free_disk = shutil.disk_usage('/')
+    
+    # Convertimos de bytes a gigabytes
+    used_disk_gb = used_disk / (1024 ** 3)
+    
+    return (used_disk_gb*100)/total_disk
 
 def porcentaje_uso_CPU():
     return psutil.cpu_percent(interval=1)
@@ -40,7 +60,7 @@ def enviar_email(cont):
 BROKER = 'broker.hivemq.com'
 PORT = 1883
 TOPIC_DATA = "cliente1"
-TOPIC_ALERT = "cliente2"
+TOPIC_ALERT = "merequetengue"
 # generate client ID with pub prefix randomly
 CLIENT_ID = "python-mqtt-tcp-pub-sub-{id}".format(id=random.randint(0, 1000))
 FLAG_CONNECTED = 0
@@ -89,9 +109,15 @@ def run():
     while True:
         
         #contador = contador + 1
-        porcentaje = porcentaje_uso_CPU()
+        porcentaje_CPU = porcentaje_uso_CPU()
+        porcentaje_Memory = porcentaje_uso_Memory()
+        porcentaje_Disco = porcentaje_uso_Disco()
         
-        data = {'value':porcentaje}
+        data = {
+            'CPU':porcentaje_CPU, 
+            'Memory':porcentaje_Memory,
+            'Disco':porcentaje_Disco,
+        }
         string = json.dumps(data)
         publish(client, TOPIC_ALERT, json.loads(string)) 
 
