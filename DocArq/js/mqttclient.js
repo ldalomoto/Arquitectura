@@ -25,13 +25,34 @@ client.onConnectionLost = function (responseObject) {
 
 client.onMessageArrived = function (message) {
 	let destination = message.destinationName;
-	if (destination === "cliente2") {
+	if (destination === "merequetengue") {
 		let response = JSON.parse(message.payloadString);
 		dataFormat = response;
-		console.log(parseFloat(dataFormat.value));
+		let dataCPU = dataFormat.CPU;
+		let dataMemory = dataFormat.Memory;
+		let dataDisco = dataFormat.Disco;
+        
+		//console.log(dataFormat);
+		//console.log(parseFloat(dataFormat.value));
+		//Crear datos CPU, Memoria y Almacenamiento 
+
 		addData(
 			myChart,
-			parseFloat(dataFormat.value),
+			parseFloat(dataCPU),
+			
+		);
+
+		addData_Memory(
+			Grafica2,
+			parseFloat(dataMemory),
+			
+		);
+		
+
+		addData_Disco(
+			Grafica3,
+			parseFloat(dataDisco),
+			
 		);
 	}
 };
@@ -41,7 +62,7 @@ var options = {
 	onSuccess: function () {
 		console.log("mqtt connected");
 		// Connection succeeded; subscribe to our topic, you can add multile lines of these
-		client.subscribe("cliente2", { qos: 1 });
+		client.subscribe("merequetengue", { qos: 1 });
 	},
 	onFailure: function (message) {
 		console.log("Connection failed: " + message.errorMessage);

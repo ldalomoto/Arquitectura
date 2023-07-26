@@ -33,7 +33,7 @@
         <div class="container-fluid bg-primary text-white text-center mt-0"><h1>Monitor de Hardware</h1> </div>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-4">
                     <div class="card ">
                         <div class="card-body text-center">
                             <h1>Gráfico Rendimiento CPU</h1>
@@ -46,13 +46,42 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-4">
+                    <div class="card ">
+                        <div class="card-body text-center">
+                            <h1>Gráfico Rendimiento Memoria RAM</h1>
+                        </div>
+                        <div class="card-body">
+                            <button class="btn btn-danger" onClick="window.location.reload();">Refresh Page</button>
+                        </div>
+                        <div class="card-body col-md-12">
+                            <canvas id="Grafica2"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card ">
+                        <div class="card-body text-center">
+                            <h1>Gráfico Almacenamiento Disco</h1>
+                        </div>
+                        <div class="card-body">
+                            <button class="btn btn-danger" onClick="window.location.reload();">Refresh Page</button>
+                        </div>
+                        <div class="card-body col-md-12">
+                            <canvas id="Grafica3"></canvas>
+                        </div>
+                    </div>
+                </div>
                 
             </div>
-          
+
         </div>
        
         <!-- Grafico -->
         <script type="text/javascript" src="js/grafico.js"></script>
+        
 
     </body>
 </html>
